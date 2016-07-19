@@ -67,8 +67,7 @@ class PublishProcess(
       val pom = getPom(data)
       val repos = getGithubRepo(pom)
 
-      if (0 < repos.size) {
-
+      if (repos.isEmpty) {
         data.deleteTemp()
         NoContent
       } else {
@@ -80,7 +79,6 @@ class PublishProcess(
           data.writePom()
           data.deleteTemp()
           updateIndex(repo, pom, data)
-
           Created
         } else {
 
