@@ -4,6 +4,8 @@ import Keys._
 // turn on testing in .travis.yml when this is resolve
 lazy val testSetup = Seq(
   scaladexBaseUrl := "http://localhost:8080",
+  credentials in Scaladex += Credentials(Path.userHome / ".ivy2" / ".scaladex.credentials"),
+    // Credentials("Scaladex Realm", "localhost", "<github username>", "<github password>"),
   TaskKey[Unit]("startServer") := {
     println("todo")
   },
@@ -16,5 +18,5 @@ lazy val testSetup = Seq(
 )
 
 lazy val root = (project in file("."))
-  .settings(testSetup)
   .enablePlugins(ScaladexPlugin)
+  .settings(testSetup)
