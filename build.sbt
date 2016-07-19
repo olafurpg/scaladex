@@ -46,7 +46,6 @@ lazy val template = project
 lazy val server = project
   .settings(commonSettings: _*)
   .settings(
-    resolvers += Resolver.bintrayRepo("btomala", "maven"),
     libraryDependencies ++= Seq(
       "com.typesafe.akka"                  %% "akka-http-experimental" % akkaVersion,
       "com.softwaremill.akka-http-session" %% "core"                   % "0.2.6",
@@ -60,11 +59,9 @@ lazy val server = project
     ),
     reStart <<= reStart.dependsOn(WebKeys.assets in Assets),
     unmanagedResourceDirectories in Compile += (WebKeys.public in Assets).value,
-    javaOptions in Universal += "-Dproduction=true",
-    javaOptions in reStart ++= Seq(
-      "-Dproduction=false",
-      "-Xmx3g"
-    )
+    // run the following in sbt if you want to manage an elasticsearch server
+    // set javaOptions in reStart := Seq("-DELASTICSEARCH=remote", "-Xmx3g")
+    javaOptions in reStart += "-Xmx3g"
   )
   .dependsOn(template, data)
   .enablePlugins(SbtSass, JavaServerAppPackaging)
@@ -96,7 +93,9 @@ lazy val data = project
     ),
     buildInfoPackage := "build.info",
     buildInfoKeys := Seq[BuildInfoKey](baseDirectory in ThisBuild),
-    javaOptions in reStart += "-Xmx4g"
+    // SBT_OPTS="-Xms128M -Xmx256M -Xss1M -XX:+CMSClassUnloadingEnabled" sbt
+    // set javaOptions in reStart := Seq("-DELASTICSEARCH=remote", "-Xmx3g")
+    javaOptions in reStart += "-Xmx3g"
   )
   .enablePlugins(BuildInfoPlugin)
   .dependsOn(model)

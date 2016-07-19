@@ -28,8 +28,13 @@ import scala.util.Try
 import java.util.UUID
 import scala.collection.parallel.mutable.ParTrieMap
 
+import com.typesafe.config.ConfigFactory
+
 object Server {
   def main(args: Array[String]): Unit = {
+    val config = ConfigFactory.load().getConfig("org.scala_lang.index.server")
+    val sessionSecret = config.getString("sesssion-secret")
+
     implicit val system = ActorSystem("scaladex")
     import system.dispatcher
     implicit val materializer = ActorMaterializer()
@@ -37,7 +42,7 @@ object Server {
     val github = new Github
     val users = ParTrieMap[UUID, UserState]()
 
-    val sessionConfig = SessionConfig.default("c05ll3lesrinf39t7mc5h6un6r0c69lgfno69dsak3vabeqamouq4328cuaekros401ajdpkh60rrtpd8ro24rbuqmgtnd1ebag6ljnb65i8a55d482ok7o0nch0bfbe")
+    val sessionConfig = SessionConfig.default(sessionSecret)
     implicit def serializer: SessionSerializer[UUID, String] = new SingleValueSessionSerializer(
       _.toString(),
       (id: String) => Try { UUID.fromString(id) }

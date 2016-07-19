@@ -46,10 +46,10 @@ object UserState extends DefaultJsonProtocol {
 class Github(implicit system: ActorSystem, materializer: ActorMaterializer) extends GithubProtocol {
   import system.dispatcher
 
-  val config = ConfigFactory.load().getConfig("org.scala_lang.index.oauth2")
+  val config = ConfigFactory.load().getConfig("org.scala_lang.index.server.oauth2")
   val clientId = config.getString("client-id")
   val clientSecret = config.getString("client-secret")
-  val redirectUri = config.getString("redirect-uri")
+  val redirectUri = config.getString("uri") + "/callback/done"
 
   def info(code: String) = {
     def access = {

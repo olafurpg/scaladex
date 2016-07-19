@@ -12,6 +12,8 @@ import org.json4s._
 import org.json4s.native.Serialization
 import org.json4s.native.Serialization.{read, write}
 
+import com.typesafe.config.ConfigFactory
+
 trait ProjectProtocol {
 
   implicit val formats = Serialization.formats(ShortTypeHints(List(
@@ -45,14 +47,22 @@ package object elastic extends ProjectProtocol {
 
   /** @see https://github.com/sksamuel/elastic4s#client for configurations */
 
-  val maxResultWindow = 10000 // <=> max amount of projects (June 1st 2016 ~ 2500 projects)
-  private val base = build.info.BuildInfo.baseDirectory.toPath
-  val esSettings = Settings.settingsBuilder()
-    .put("path.home", base.resolve(".esdata").toString())
-    .put("max_result_window", maxResultWindow)
-    
+  lazy val esClient = {
+    val config = ConfigFactory.load().getConfig("org.scala_lang.index.data")
+    val elasticsearch = config.getString("elasticsearch")
 
-  lazy val esClient = ElasticClient.local(esSettings.build)
+    println(s"elasticsearch $elasticsearch")
+    if(elasticsearch == "remote") {
+      ElasticClient.transport(ElasticsearchClientUri("localhost", 9300))
+    } else if(elasticsearch == "local") {
+      val base = build.info.BuildInfo.baseDirectory.toPath
+      val esSettings = Settings.settingsBuilder()
+        .put("path.home", base.resolve(".esdata").toString())
+      ElasticClient.local(esSettings.build)
+    } else {
+      sys.error(s"org.scala_lang.index.data.elasticsearch should be remote or local: $elasticsearch")
+    }
+  }
 
   val indexName = "scaladex"
   val projectsCollection = "projects"
