@@ -18,6 +18,7 @@ import akka.stream.scaladsl._
 import scala.concurrent.Future
 
 import com.typesafe.config.ConfigFactory
+import strawman.collection.immutable.{ List, Nil, Range }
 
 object Response {
   case class Permissions(admin: Boolean, push: Boolean, pull: Boolean)
@@ -126,7 +127,7 @@ class Github(implicit system: ActorSystem, materializer: ActorMaterializer)
           case (vs, lastPage) =>
             val nextPagesRequests =
               if (lastPage > 1) {
-                Source((2 to lastPage).map(page => request(Some(page))))
+                Source(Range.inclusive(2, lastPage).map(page => request(Some(page))))
                   .map(r => (r, r))
                   .via(poolClientFlow)
                   .runWith(Sink.seq)

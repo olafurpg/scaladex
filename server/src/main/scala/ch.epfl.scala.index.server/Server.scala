@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory
 
 import org.elasticsearch.action.search.SearchPhaseExecutionException
 import org.apache.lucene.queryparser.classic.ParseException
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Nil
 
 object Server {
   private val log = LoggerFactory.getLogger(getClass)

@@ -28,6 +28,7 @@ import scala.util.{Failure, Success, Try}
 import java.io.{PrintWriter, StringWriter}
 
 import org.slf4j.LoggerFactory
+import strawman.collection.immutable.{ List, Map }
 
 private[api] class PublishProcess(paths: DataPaths,
                                   dataRepository: DataRepository)(

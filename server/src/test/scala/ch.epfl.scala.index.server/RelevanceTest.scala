@@ -17,6 +17,7 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 
 import akka.testkit.TestKit
+import strawman.collection.immutable.{ List, Nil }
 
 class RelevanceTest
     extends TestKit(ActorSystem("SbtActorTest"))

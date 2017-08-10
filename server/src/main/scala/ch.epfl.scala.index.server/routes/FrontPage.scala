@@ -10,6 +10,7 @@ import com.softwaremill.session.SessionDirectives._
 import com.softwaremill.session.SessionOptions._
 
 import akka.http.scaladsl.server.Directives._
+import strawman.collection.immutable.Map
 
 class FrontPage(dataRepository: DataRepository, session: GithubUserSession) {
   import session._

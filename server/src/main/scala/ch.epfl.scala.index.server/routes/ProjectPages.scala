@@ -25,6 +25,8 @@ import akka.http.scaladsl.server.Directives._
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.Future
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.Vector
 
 class ProjectPages(dataRepository: DataRepository,
                    session: GithubUserSession,

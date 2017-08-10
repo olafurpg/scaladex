@@ -7,6 +7,8 @@ import release._
 import akka.http.scaladsl._
 import server.Directives._
 import model.StatusCodes._
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.List
 
 class Badges(dataRepository: DataRepository) {
 

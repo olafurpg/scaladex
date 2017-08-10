@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future, Await}
 import scala.concurrent.duration.Duration
+import strawman.collection.stringToStringOps
+import strawman.collection.immutable.{ List, Map, Nil }
 
 /**
  * @param github  Github client

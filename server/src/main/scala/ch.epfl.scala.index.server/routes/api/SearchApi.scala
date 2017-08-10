@@ -17,6 +17,7 @@ import model.StatusCodes._
 import upickle.default._
 
 import scala.concurrent.ExecutionContext
+import strawman.collection.immutable.{ List, Nil }
 
 object Api {
   case class Project(

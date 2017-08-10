@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory
 
 import scala.concurrent.Future
 import scala.collection.mutable.{Map => MMap}
+import strawman.collection.stringToStringOps
 
 class PublishApi(paths: DataPaths,
                  dataRepository: DataRepository,
