@@ -31,8 +31,8 @@ lazy val baseSettings = Seq(
 
 lazy val commonSettings = Seq(
   resolvers += Resolver.typesafeIvyRepo("releases"),
-  scalaVersion := "2.12.2",
-  scalacOptions := Seq(
+  scalaVersion := "2.12.3",
+  scalacOptions ++= Seq(
     "-deprecation",
     "-encoding",
     "UTF-8",
